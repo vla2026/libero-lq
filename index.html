@@ -72,10 +72,10 @@ Self-Improving Robotic Manipulation</div>
 
     <div class="tagline" id="deploy-in-sim">Simulation Demo.</div>
 
-    <!-- Video Gallery Section - STAIRS VIDEOS -->
-    <div class="video-gallery-section" id="stairsGallerySection">
+    <!-- Video Gallery Section - SIMULATION RELATIVE REASONING VIDEOS -->
+    <div class="video-gallery-section" id="SimRelGallerySection">
       <div class="video-gallery-container">
-        <div class="video-gallery" id="videoGalleryStairs">
+        <div class="video-gallery" id="videoGallerySimRel">
           <!-- Videos remain here - ADD autoplay -->
           <video class="gallery-video" src="./real_rel/1.mp4" autoplay muted playsinline loop></video>
           <video class="gallery-video" src="./real_rel/2.mp4" autoplay muted playsinline loop></video>
@@ -89,8 +89,8 @@ Self-Improving Robotic Manipulation</div>
       <div class="gallery-caption-container">
           <!-- Move button controls INSIDE caption container -->
           <div class="gallery-nav-controls">
-              <button class="gallery-nav left" id="scrollLeftBtnStairs">&lt;</button>
-              <button class="gallery-nav right" id="scrollRightBtnStairs">&gt;</button>
+              <button class="gallery-nav left" id="scrollLeftBtnSimRel">&lt;</button>
+              <button class="gallery-nav right" id="scrollRightBtnSimRel">&gt;</button>
           </div>
           <!-- Caption text -->
           <p class="figure-caption gallery-caption">
@@ -449,6 +449,15 @@ Self-Improving Robotic Manipulation</div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const galleries = [
+        {
+          sectionId: 'SimRelGallerySection', // ID of the .video-gallery-section for sim-relative
+          galleryInnerId: 'videoGallerySimRel',
+          scrollLeftBtnId: 'scrollLeftBtnSimRel',
+          scrollRightBtnId: 'scrollRightBtnSimRel'
+        },
+
+
+
         {
           sectionId: 'gallery-section-anchor', // ID of the .video-gallery-section for sitting
           galleryInnerId: 'videoGallerySitting',
