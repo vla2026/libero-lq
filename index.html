@@ -16,8 +16,8 @@
       <li><a href="#deploy-in-sim">Simulation Demo</a></li>
       <li><a href="#deploy-in-real">Real-world Demo</a></li>
       <li><a href="#approach">Approach</a></li>
-      <li class="toc-subsection"><a href="#real-to-sim">Real to Sim</a></li>
-      <li class="toc-subsection"><a href="#training-in-sim">Training in Sim</a></li>
+      <li class="toc-subsection"><a href="#a2l">Action to Language</a></li>
+      <li class="toc-subsection"><a href="#l2c">Language Consistency Verification</a></li>
       <li><a href="#deploy-in-real-fail">Failure Cases</a></li>
       <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
     </ul>
@@ -163,6 +163,18 @@ Self-Improving Robotic Manipulation</div>
   
     <div class="tagline" id="approach">Approach.</div>
 
+    <a id="figure-1-img" href="figs/lacy_pipeline.png" download="lacy_pipeline.png">
+      <img src="figs/lacy_pipeline.png" alt="lacy-pipeline">
+    </a>
+    <!-- Caption for Figure 1 -->
+    <p class="figure-caption">
+      <b>Overview of the LACY framework:</b> LACY builds upon a single VLM fine-tuned to serve three roles: (1) an action generator (L2A), (2) an action explainer (A2L), and (3) a consistency verifier (L2C). 
+      The framework operates as a closed-loop system, where these bidirectional capabilities enable LACY to generate new high-quality training data and iteratively refine itself. 
+      (4) Each task is framed as a chain-of-thought (CoT) process, where the model first performs object grounding to predict object names and locations and then uses this contextual information to complete the target task. 
+      (5) We sample the new sampled dataset which can be added to the initial dataset.
+    </p>
+
+
     <div class="r2s-vertical-layout">
       <div class="r2s-video-row r2s-top-row">
         <video class="r2s-video-item r2s-video-input" src="./single/input.mp4" autoplay muted loop playsinline></video>
@@ -190,7 +202,7 @@ Self-Improving Robotic Manipulation</div>
       </p>
     </div>
 
-    <div class="section-subtitle" id="real-to-sim">1. Real to Sim.</div>
+    <div class="section-subtitle" id="a2l">1. Action to Language.</div>
 
   <!-- Video Gallery Section - SITTING VIDEOS -->
   <div class="video-gallery-section" id="reconstructionGallerySection">
@@ -220,14 +232,6 @@ Self-Improving Robotic Manipulation</div>
   </div>
   <!-- End Video Gallery Section -->
 
-    <a id="figure-1-img" href="figs/2.png" download="2.png">
-      <img src="figs/2-min.png" alt="real-to-sim pipeline">
-    </a>
-    <!-- Caption for Figure 2 -->
-    <p class="figure-caption">
-      <b>Figure 1:</b> The Real-to-Sim pipeline reconstructs human motion and scene geometry from video, outputting simulator-ready data.
-    </p>
-
     <a id="figure-2-img" href="figs/4.png" download="4.png">
       <img src="figs/4-min.png" alt="Approach Overview">
     </a>
@@ -236,7 +240,7 @@ Self-Improving Robotic Manipulation</div>
       <b>Figure 2:</b> Versatile capabilities include handling internet videos, multi-human reconstruction, and ego-view rendering.
     </p>
 
-    <div class="section-subtitle" id="training-in-sim">2. Training in Sim.</div>
+    <div class="section-subtitle" id="l2c">2. Language Consistency Verification.</div>
 
     <a id="figure-3-img" href="figs/3.png" download="3.png">
       <img src="figs/3-min.png" alt="Training in Sim">
