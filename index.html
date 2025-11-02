@@ -168,7 +168,7 @@ Self-Improving Robotic Manipulation</div>
     </a>
     <!-- Caption for Figure 1 -->
     <p class="figure-caption">
-      <b>Overview of the LACY framework</b> A single vision-language model jointly performs three tasks—L2A, A2L, and L2C—forming a self-improving cycle where actions and language refine each other through consistency verification.
+      <b>Overview of the LACY framework:</b> A single vision-language model jointly performs three tasks—L2A, A2L, and L2C—forming a self-improving cycle where actions and language refine each other through consistency verification.
     </p>
 
     <div class="section">
@@ -215,8 +215,17 @@ By combining multi-task fine-tuning, chain-of-thought grounding, and confidence-
     </a>
     <!-- Caption for Figure 2 -->
     <p class="figure-caption">
-      <b>Language to Action, Action to Language:</b> We argue that learning the A2L approach deepens understanding of robot tasks, and this can maximize learning efficiency from limited in-domain demonstrations through bidirectional grounding.
+      <b>Language to Action, Action to Language:</b> While conventional VLAs learn only the <b>language-to-action (L2A)</b> mapping, LACY additionally trains the <b>action-to-language (A2L)</b> inverse mapping, enabling the model to generate and explain actions bidirectionally.
     </p>
+
+    <div class="section">
+
+      Traditional vision-language-action (VLA) models are trained solely in a <b>language-to-action (L2A)</b> direction—mapping task instructions and visual inputs to corresponding robot actions.
+While this paradigm enables imitation from language, it lacks the ability to reason about why an action is appropriate, limiting generalization and interpretability.
+To address this, we introduce the <b>action-to-language (A2L)</b> counterpart, which learns to describe observed actions in natural language given the same visual context.
+This inverse mapping encourages the model to form richer bidirectional representations, allowing it to <b>both act and explain</b>.
+When combined with the L2C verifier, these two tasks form the foundation of LACY's self-improving language-action cycle.
+    </div>
 
     <div class="section-subtitle" id="l2c">2. Language Consistency Verification.</div>
 
@@ -225,22 +234,32 @@ By combining multi-task fine-tuning, chain-of-thought grounding, and confidence-
     </a>
     <!-- Caption for Figure 3 -->
     <p class="figure-caption">
-      <b>Language Consistency Verification (L2C):</b> LACY leverages the L2C task to autonomously filter and curate high-quality training data from the L2A and A2L outputs, ensuring that only samples with consistent language-action pairs are retained for further training. This self-supervisory mechanism enhances the model's robustness and generalization capabilities.
+      <b>Language Consistency Verification (L2C):</b> The L2C module verifies whether the generated action and reconstructed language remain consistent with the original instruction, enabling self-supervised feedback for continual improvement.
 
 
     <div class="section">
 
-      The <b>L2C (Language-to-Consistency)</b> module evaluates whether the input language and the reconstructed description convey the same semantic intent.
-Instead of treating the output as a discrete decision, L2C computes a continuous confidence score by examining the logits of the tokens “0” and “1” at the final decoding step.
-This score is then used to selectively filter low-confidence samples, enabling active self-improvement during data augmentation.
+      The <b>L2C (Language-to-Consistency)</b> module completes the language-action cycle by verifying whether the model's predicted action truly reflects the intent of the original language instruction.
+After generating an action from a command and explaining it back in language, L2C checks if the two descriptions convey the same meaning under the same visual context.
+This consistency feedback allows the model to evaluate its own outputs and identify uncertain cases without human supervision.
+By learning from these self-assessments, LACY continuously refines its understanding of how language and action correspond, leading to more reliable and generalizable behavior.
     </div> 
 
+    
     <a id="figure-4-img" href="figs/self_supervision_pipeline.png" download="self_supervision_pipeline.png">
-    <img src="figs/self_supervision_pipeline.png" alt="L2C pipeline">
+      <img src="figs/self_supervision_pipeline.png" alt="L2C pipeline">
     </a>
     <!-- Caption for Figure 4 -->
     <p class="figure-caption">
-      <b>L2C Pipeline:</b>  The L2C module estimates semantic consistency between two language descriptions by converting the logit difference of “0”/“1” tokens into a continuous confidence score.
+      <b>L2C Pipeline:</b>  The L2C verifier assigns a confidence score to each language pair, allowing LACY to keep only reliable samples during self-supervised learning.
+      
+      <div class="section">
+  
+        To make self-verification reliable, the L2C module also estimates how confident the model is in its consistency judgment.
+Instead of a simple yes-or-no decision, LACY converts the model's internal output into a smooth confidence score that reflects how strongly it believes two descriptions match.
+This confidence is then used to filter uncertain or noisy samples—only high-quality, consistent pairs are added back to the training data.
+Through this selective feedback, LACY improves efficiently while avoiding the accumulation of its own errors.
+      </div> 
 
     <!-- <div class="additional-video-row">
       <video id="input-video-cropped" class="additional-video-item" src="train_in_sim/vid1_input.mp4" autoplay muted playsinline loop></video>
