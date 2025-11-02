@@ -258,7 +258,6 @@ a#figure-3-img img {
   flex: 0 0 auto; /* Prevent videos from shrinking/growing in the flex context */
   /* width: 30vw; */ /* Remove fixed/relative width */
   /* max-width: 450px; */ /* Remove max-width as width will be auto */
-  /* height: 220px;  Set a fixed height for all videos. Adjust this value as desired. */
   height: 220px;  /* Set a fixed height for all videos. Adjust this value as desired. */
   width: auto;    /* Allow width to adjust to maintain original aspect ratio */
   /* max-height: 253.125px; */ /* No longer needed if height is fixed */
@@ -558,7 +557,7 @@ video.r2s-video-item {
 /* Styling for individual videos within the gallery */
 .video-gallery .gallery-video {
   /* width: auto; */ /* Let height dictate width for consistency */
-  height: 448px; /* Fixed height for all gallery videos */
+  height: 336px; /* Fixed height for all gallery videos */
   margin-right: 0px; /* Spacing between videos */
   flex-shrink: 0; /* Prevent videos from shrinking in the flex container */
 }
