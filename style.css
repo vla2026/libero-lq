@@ -159,6 +159,8 @@ a#figure-3-img {
 
 /* Ensure images within these links take full width and are block */
 a#figure-1-img img,
+a#figure-2-img img,
+a#figure-3-img img,
 a#figure-4-img img {
   display: block; /* Removes extra space below if image were inline */
   width: 100%;    /* Makes image fill the link's width */
@@ -166,38 +168,20 @@ a#figure-4-img img {
   /* General img border styles will apply unless overridden below */
 }
 
-a#figure-2-img img,
-a#figure-3-img img {
-  display: block; /* Removes extra space below if image were inline */
-  width: 70%;    /* Makes image fill the link's width */
-  height: auto;   /* Maintains aspect ratio */
-  /* General img border styles will apply unless overridden below */
-}
-
-
 /* Style for Figure 1 (figs/2-min.png) link container */
 #figure-1-img,
-#figure-2-img,
-#figure-3-img,
 #figure-4-img {
   margin-top: 20px; /* Consistent top margin */
-  margin-left: -25px; /* Override global img margin */
-  margin-right: 18px; /* Override global img margin */
+  margin-left: -20px; /* Override global img margin */
+  margin-right: 13px; /* Override global img margin */
 }
 
 /* Style for Figure 2 (figs/4.png) link container */
 #figure-2-img {
   /* border: none; */ /* Remove border from the link itself */
-  border-radius: 0; /* Match the link's border-radius removal */
+  margin-top: 20px; /* Consistent top margin */
   margin-left: -25px; /* Override global img margin */
   margin-right: 17.5px; /* Override global img margin */
-  margin-top: 20px; /* Consistent top margin */
-}
-
-/* Specific border handling for image inside #figure-2-img link */
-a#figure-2-img img {
-  border: none; /* Ensure the image inside the borderless link is also borderless */
-  border-radius: 0; /* Match the link's border-radius removal */
 }
 
 /* Style for Figure 3 (figs/3.png) link container */
