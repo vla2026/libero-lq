@@ -150,7 +150,8 @@ img {
 /* General style for the specific image links */
 a#figure-1-img,
 a#figure-2-img,
-a#figure-3-img {
+a#figure-3-img,
+a#figure-4-img {
   display: block; /* Ensures proper layout and application of margins */
   text-decoration: none; /* Removes hyperlink underline */
   cursor: default; /* Makes it not look like a clickable link */
@@ -170,10 +171,13 @@ a#figure-4-img img {
 
 /* Style for Figure 1 (figs/2-min.png) link container */
 #figure-1-img,
+#figure-2-img,
+#figure-3-img,
 #figure-4-img {
   margin-top: 20px; /* Consistent top margin */
   margin-left: -20px; /* Override global img margin */
   margin-right: 13px; /* Override global img margin */
+  margin-bottom: 40px; /* Add bottom margin for spacing */
 }
 
 /* Style for Figure 2 (figs/4.png) link container */
