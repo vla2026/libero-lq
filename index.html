@@ -204,33 +204,6 @@ Self-Improving Robotic Manipulation</div>
 
     <div class="section-subtitle" id="a2l">1. Action to Language.</div>
 
-  <!-- Video Gallery Section - SITTING VIDEOS -->
-  <div class="video-gallery-section" id="reconstructionGallerySection">
-    <div class="video-gallery-container">
-      <div class="video-gallery" id="videoGalleryReconstruction">
-        <!-- Videos remain here - ADD autoplay -->
-        <video class="gallery-video" src="./reconstruction/6.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./reconstruction/11.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./reconstruction/13.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./reconstruction/7.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./reconstruction/14.mp4" autoplay muted playsinline loop></video>
-        <!-- Add more videos as needed, ensuring they have autoplay muted loop -->
-      </div>
-    </div>
-    <!-- Container for the caption AND buttons -->
-    <div class="gallery-caption-container">
-        <!-- Move button controls INSIDE caption container -->
-        <div class="gallery-nav-controls">
-            <button class="gallery-nav left" id="scrollLeftBtnReconstruction">&lt;</button>
-            <button class="gallery-nav right" id="scrollRightBtnReconstruction">&gt;</button>
-        </div>
-        <!-- Caption text -->
-        <p class="figure-caption gallery-caption" style="margin-bottom: 30px;">
-            <b>Human + World Reconstruction:</b> Our reconstruction pipeline can handle videos with multiple humans and complex environments from Internet. More results in the <a href="./page1.html" target="_blank">gallery</a>.
-        </p>
-    </div>
-  </div>
-  <!-- End Video Gallery Section -->
 
     <a id="figure-2-img" href="figs/bidirectional.png" download="bidirectional.png">
       <img src="figs/bidirectional.png" alt="Bidirectional Tasks">
@@ -256,9 +229,9 @@ Self-Improving Robotic Manipulation</div>
     <p class="figure-caption">
       <b>L2C Pipeline:</b>  The L2C (Language-to-Consistency) verifier assesses semantic alignment between input and reconstructed language pairs.
 Instead of relying on discrete model outputs, LACY extracts the logits of the “0” / “1” tokens at the final decoding step and converts their difference into a calibrated confidence value via a sigmoid function.
-This score determines whether newly generated samples are retained during the model’s self-training cycle.
+This score determines whether newly generated samples are retained during the model's self-training cycle.
 
-    <div class="additional-video-row">
+    <!-- <div class="additional-video-row">
       <video id="input-video-cropped" class="additional-video-item" src="train_in_sim/vid1_input.mp4" autoplay muted playsinline loop></video>
       <video class="additional-video-item" src="train_in_sim/vid1_3d.mp4" autoplay muted playsinline loop></video>
       <video class="additional-video-item" src="train_in_sim/vid1_rl.mp4" autoplay muted playsinline loop></video>
@@ -275,7 +248,7 @@ This score determines whether newly generated samples are retained during the mo
   </div>
   <p class="figure-caption">
           We conducted experiments to track internet videos of human performing complex motions, including crawling down the stairs and vaulting over a large block. This shows our pipeline's ability to learn from scalable web data and its ability to learn diverse motions.
-  </p>
+  </p> -->
 
   <div class="tagline" id="deploy-in-real-fail">Failure Cases.</div>
 
@@ -494,67 +467,10 @@ This score determines whether newly generated samples are retained during the mo
     });
   </script>
 
-  <!-- JavaScript for Real-to-Sim Video Synchronization -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const videosToSync = [
-        document.querySelector('.r2s-video-input'),
-        document.querySelector('.r2s-video-smpl'),
-        document.querySelector('.r2s-video-g1'),
-        document.querySelector('.r2s-video-ego-rgb'),
-        document.querySelector('.r2s-video-ego-depth'),
-        document.querySelector('.r2s-video-sim')
-      ].filter(Boolean); // Filter out nulls if any class name is wrong or video missing
-
-      function synchronizeAndPlayR2SVideos() {
-        if (videosToSync.length === 0) {
-          console.warn('No videos found for Real-to-Sim synchronization.');
-          return;
-        }
-
-        const readyPromises = videosToSync.map(video => {
-          return new Promise((resolve, reject) => {
-            // If video is already ready (e.g., cached), resolve immediately
-            if (video.readyState >= 4) { // HAVE_ENOUGH_DATA (canplaythrough)
-              resolve();
-            } else {
-              video.addEventListener('canplaythrough', resolve, { once: true });
-              video.addEventListener('error', reject, { once: true }); // Handle potential loading errors
-            }
-          });
-        });
-
-        Promise.all(readyPromises)
-          .then(() => {
-            console.log('All Real-to-Sim videos are ready to play. Starting playback.');
-            videosToSync.forEach(video => {
-              video.currentTime = 0; // Ensure starting from the beginning
-              video.play().catch(error => {
-                console.warn(`Autoplay was prevented for video ${video.src}. User interaction might be needed.`, error);
-                // Ensure controls are visible if autoplay fails for any video
-                video.controls = true;
-              });
-            });
-          })
-          .catch(error => {
-            console.error('Error waiting for Real-to-Sim videos to be ready:', error);
-            // Optionally, provide a fallback or user message here
-            videosToSync.forEach(video => video.controls = true); // Show controls on all if any failed to load
-          });
-      }
-
-      synchronizeAndPlayR2SVideos();
-
-      // The `loop` attribute on the HTML video tags will handle continuous looping.
-      // The videos will naturally re-synchronize at their LCM due to the loop attribute
-      // if they have different durations and all successfully start.
-    });
-  </script>
-
   <!-- JavaScript to prevent default click on specific image links -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const imageLinkIds = ['figure-1-img', 'figure-2-img', 'figure-3-img'];
+      const imageLinkIds = ['figure-1-img', 'figure-2-img', 'figure-3-img', 'figure-4-img'];
       imageLinkIds.forEach(id => {
         const linkElement = document.getElementById(id);
         if (linkElement) {
