@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LACY</title>
+  <title>LIBERO-LQ</title>
   <link rel="icon" href="./figs/logo.png" type="image/png">
   <!-- <link rel="icon" href="./figs/logo.svg" type="image/svg+xml"> -->
 
@@ -25,12 +25,19 @@
     <hr>
     <ul>
       <li><a href="#abstract">Abstract</a></li>
-      <li><a href="#deploy-in-sim">Simulation Demo</a></li>
-      <li><a href="#deploy-in-real">Real-world Demo</a></li>
-      <li><a href="#approach">Approach</a></li>
-      <li class="toc-subsection"><a href="#a2l">A2L</a></li>
-      <li class="toc-subsection"><a href="#l2c">L2C</a></li>
-      <li><a href="#deploy-in-real-fail">Failure Cases</a></li>
+
+      <li><a href="#motivation">Why VLA Latency Matters</a></li>
+
+      <li><a href="#latency">Latency</a></li>
+        <li class="toc-subsection"><a href="#Latency">Latency-Aware Simulation</a></li>
+        <li class="toc-subsection"><a href="#Execution">Policy Execution Protocol</a></li>
+
+      <li><a href="#Quality">Quality</a></li>
+        <li class="toc-subsection"><a href="#InferenceLatency">InferenceLatency</a></li>
+        <li class="toc-subsection"><a href="#EndToEndTaskCompletionTime">End-to-End Task Completion Time</a></li>
+        <li class="toc-subsection"><a href="#Jerk">Jerk</a></li>
+
+      <li><a href="#deploy-in-real-fail">Experimental Results</a></li>
       <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
     </ul>
   </div>
@@ -98,21 +105,6 @@
     <!-- 3. LATENCY -->
     <div class="tagline" id="latency">Latency</div>
 
-    <a id="figure-1-img" href="figs/controlstack.png" download="controlstack.png">
-      <img src="figs/controlstack.png" alt="controlstack">
-    </a>
-    <!-- Caption for Figure 1 -->
-    <p class="figure-caption">
-      <b>Execution pipeline of a Vision-Language-Action (VLA) system under realistic deployment conditions.</b> 
-    </p>
-
-    <div class="section">
-      High-frequency sensing and low-level control operate continuously, while VLA policy inference runs at a much lower rate and updates position targets asynchronously. 
-      During inference latency, the robot continues executing previously issued commands via the low-level controller, resulting in decoupled policy computation and control execution. 
-      This mismatch is typically ignored in existing evaluation protocols.
-    </div> 
-
-  
     <!-- 3.1 Latency-Aware Execution Model. -->
     <div class="section-subtitle" id="Latency">1. Latency-Aware Simulation.</div>
 
@@ -159,7 +151,6 @@
     <p class="figure-caption">
       <b>Overview of LIBERO-LQ.</b> 
     <div class="section">
-
       Existing robotic manipulation benchmarks primarily evaluate policies using functional metrics such as binary task success. 
       While effective for measuring task completion, such metrics provide limited insight into execution behavior and deployment-relevant performance.
       To address this limitation, we include several non-functional metrics, which characterize execution quality, efficiency, and robustness.
