@@ -37,6 +37,9 @@
         <li class="toc-subsection"><a href="#EndToEndTaskCompletionTime">End-to-End Task Completion Time</a></li>
         <li class="toc-subsection"><a href="#Jerk">Jerk</a></li>
         <li class="toc-subsection"><a href="#Stability">Stability</a></li>
+        <li class="toc-subsection"><a href="#TrajectoryEfficiency">Trajectory Efficiency</a></li>
+        <li class="toc-subsection"><a href="#JointRotationEfficiency">Joint Rotation Efficiency</a></li>
+        <li class="toc-subsection"><a href="#EnergyEfficiency">Energy Efficiency</a></li>
 
       <li><a href="#deploy-in-real-fail">Experimental Results</a></li>
       <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
@@ -263,8 +266,68 @@ Higher EE-Osc indicates increased oscillatory behavior during task execution, of
     <div class="section-subtitle" id="JointRotationEfficiency">Joint Rotation Efficiency.</div>
     
     <div class="section">
-    <p> We assess trajectory efficiency by the total trajectory length required to successfully complete the task.
-        Since the minimal feasible trajectory length depends on task geometry and goal configuration, efficiency is evaluated via relative, within-task comparisons among successful trials. </p>
+    <p>
+We measure joint rotation efficiency by quantifying the total amount of joint motion executed over a trajectory.
+Let \( \boldsymbol{\theta}_t \in \mathbb{R}^N \) denote the vector of joint angles at timestep \( t \) for an \( N \)-DoF robot.
+Rather than considering net joint displacement between the start and end states, we compute the cumulative joint rotation distance along the trajectory:
+</p>
+
+<p class="math-display">
+\[
+E_{\mathrm{joint}}
+=
+\sum_{t=2}^{T}
+\left\lVert
+\boldsymbol{\theta}_t - \boldsymbol{\theta}_{t-1}
+\right\rVert_1,
+\]
+</p>
+
+<p>
+where \( T \) denotes the trajectory length.
+This metric captures the total amount of joint rotation required to execute a task,
+penalizing unnecessary back-and-forth or oscillatory motions that may not affect task success
+but reduce execution efficiency.
+</p>
+
+<p>
+To account for differences in joint ranges and ensure comparability across joints,
+we additionally report a normalized variant in which each joint rotation is scaled by its
+allowable range:
+</p>
+
+<p class="math-display">
+\[
+E_{\mathrm{joint}}^{\mathrm{norm}}
+=
+\sum_{t=2}^{T}
+\sum_{i=1}^{N}
+\frac{
+\left|
+\theta_{t,i} - \theta_{t-1,i}
+\right|
+}{
+\theta_i^{\max} - \theta_i^{\min}
+},
+\]
+</p>
+
+<p>
+where \( \theta_i^{\min} \) and \( \theta_i^{\max} \) denote the lower and upper limits of joint \( i \).
+Lower values indicate more efficient joint-space trajectories with reduced unnecessary rotation.
+</p>
+
+<!-- 4.7 Energy Efficiency  -->
+    <div class="section-subtitle" id="EnergyEfficiency">Energy Efficiency.</div>
+    
+    <div class="section">
+    <p>
+We evaluate energy efficiency using a trajectory-level energy metric computed from joint torques and velocities available in simulation.
+Specifically, the total trajectory energy \( E_{\text{traj}} \) is estimated by integrating mechanical power, electrical loss,
+and constant overhead terms over time using a simplified actuator energy model.
+To decouple energy consumption from execution length, we report normalized energy defined as
+\( E_{\text{norm}} = \frac{E_{\text{traj}}}{T} \).
+</p>
 
     </div> 
 
