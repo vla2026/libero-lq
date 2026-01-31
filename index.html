@@ -33,9 +33,10 @@
         <li class="toc-subsection"><a href="#Execution">Policy Execution Protocol</a></li>
 
       <li><a href="#Quality">Quality</a></li>
-        <li class="toc-subsection"><a href="#InferenceLatency">InferenceLatency</a></li>
+        <li class="toc-subsection"><a href="#InferenceLatency">Inference Latency</a></li>
         <li class="toc-subsection"><a href="#EndToEndTaskCompletionTime">End-to-End Task Completion Time</a></li>
         <li class="toc-subsection"><a href="#Jerk">Jerk</a></li>
+        <li class="toc-subsection"><a href="#Stability">Stability</a></li>
 
       <li><a href="#deploy-in-real-fail">Experimental Results</a></li>
       <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
@@ -222,10 +223,51 @@ indicate abrupt or oscillatory behavior.
     <div class="section-subtitle" id="Stability">Stability.</div>
     
     <div class="section">
-    We define the end-to-end task completion time $T$ as the total wall-clock time required to complete a task episode, including both policy inference and action execution.
-    This metric captures the cumulative effect of inference latency and execution semantics over the entire task.
+    <p> We measure stability by the average deviation of the end-effector position from its mean over a short temporal window of the last \( K \) steps: </p>
+
+    <p class="math-display">
+    \[
+    \bar{\mathbf{p}}
+    =
+    \frac{1}{K}
+    \sum_{i=T-K+1}^{T}
+    \mathbf{p}_i,
+    \quad
+    \text{EE-Osc}
+    =
+    \frac{1}{K}
+    \sum_{i=T-K+1}^{T}
+    \left\|
+    \mathbf{p}_i - \bar{\mathbf{p}}
+    \right\|_2
+    \]
+    </p>
+
+<p>
+where \( \mathbf{p}_i \in \mathbb{R}^3 \) denotes the end-effector position at timestep \( i \).
+Higher EE-Osc indicates increased oscillatory behavior during task execution, often arising from latency-induced control inconsistencies.
+</p>
+
     </div> 
+
+    <!-- 4.5 Trajectory Efficiency -->
+    <div class="section-subtitle" id="TrajectoryEfficiency">Trajectory Efficiency.</div>
+    
+    <div class="section">
+    <p> We assess trajectory efficiency by the total trajectory length required to successfully complete the task.
+        Since the minimal feasible trajectory length depends on task geometry and goal configuration, efficiency is evaluated via relative, within-task comparisons among successful trials. </p>
+
     </div> 
+
+    <!-- 4.6 Joint Rotation Efficiency -->
+    <div class="section-subtitle" id="JointRotationEfficiency">Joint Rotation Efficiency.</div>
+    
+    <div class="section">
+    <p> We assess trajectory efficiency by the total trajectory length required to successfully complete the task.
+        Since the minimal feasible trajectory length depends on task geometry and goal configuration, efficiency is evaluated via relative, within-task comparisons among successful trials. </p>
+
+    </div> 
+
 
 
   </div> <!-- End of main-content div -->
