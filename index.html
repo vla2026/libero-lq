@@ -8,6 +8,16 @@
 
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- MathJax Configuration for LaTeX Rendering -->
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+    svg: { fontCache: 'global' }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 <body>
   <div class="toc">
@@ -27,8 +37,7 @@
 
   <div class="main-content">
     <div class="hero-text">LACY</div>
-    <div class="sub-hero-text">A Vision-Language Model-based Language-Action Cycle for
-Self-Improving Robotic Manipulation</div>
+    <div class="sub-hero-text">LIBERO-LQ: A Latency- and Quality-Aware Benchmark for Vision-Language-Action Models</div>
 
     <!-- Add Authors -->
     <div class="authors">
@@ -41,135 +50,75 @@ Self-Improving Robotic Manipulation</div>
     <!-- End Authors -->
 
     <!-- use the video ./figs/videomimic_teaser.mp4 -->
-    <video id="teaser-video" src="./figs/lacy_main.mp4" width="100%" height="100%" controls muted playsinline autoplay></video>
+    <!-- <video id="teaser-video" src="./figs/lacy_main.mp4" width="100%" height="100%" controls muted playsinline autoplay></video> -->
     <!-- Caption for Figure 1 (Teaser Video) -->
-    <p class="figure-caption">
+    <!-- <p class="figure-caption">
         <b>LACY (Language-Action CYcle)</b> enables bidirectional grounding between language and action for robotic manipulation through a self-improving loop of three tasks: language-to-action (L2A), action-to-language explanation (A2L), and language-consistency verification (L2C).
-    </p>
+    </p> -->
 
     <!-- Add Quick Links Here -->
     <div class="quick-links">
       <!-- <a href="./VideoMimic.pdf" target="_blank">[pdf]</a> -->
-      <a href="https://arxiv.org/abs/2511.02239" target="_blank">[arxiv]</a>
+      <!-- <a href="https://arxiv.org/abs/2511.02239" target="_blank">[arxiv]</a> -->
       <!-- <a href="https://github.com/hongsukchoi/VideoMimic">[code]</a>  -->
       <!-- <a href="#gallery-section-anchor">[gallery]</a> -->
-      <a href="https://youtu.be/UfWNIXBRCHc" target="_blank">[video]</a>
+      <!-- <a href="https://youtu.be/UfWNIXBRCHc" target="_blank">[video]</a> -->
     </div>
     
+    <!-- 1. ABSTRACT -->
     <div class="tagline" id="abstract">Abstract.</div>
 
 
     <div class="section">
-
-        <!-- How can we teach humanoids to climb staircases and sit on chairs using the surrounding environment context? Arguably, the simplest way is to <em>just show them</em>&mdash;casually capture a human motion video and feed it to humanoids.
-        We introduce <span style="font-variant: small-caps;">VideoMimic</span>, a real-to-sim-to-real pipeline that mines everyday videos, jointly reconstructs the humans and the environment, and produces whole-body control policies for humanoid robots that perform the corresponding skills.
-       We demonstrate the results of our pipeline on real humanoid robots, showing robust, repeatable contextual control such as staircase ascents and descents, sitting and standing from chairs and benches, as well as other dynamic whole-body skills&mdash;all from a single policy, conditioned on the environment and global root commands. 
-       <span style="font-variant: small-caps;">VideoMimic</span> offers a scalable path towards teaching humanoids to operate in diverse real-world environments. -->
-    
-
-        We present LACY (Language-Action Cycle), a unified vision-language framework that enables bidirectional grounding between language and action for robotic manipulation. 
-        Unlike prior works that focus solely on language-to-action (L2A) learning, LACY jointly trains three complementary tasks—L2A, action-to-language explanation (A2L), and language-consistency verification (L2C)—within a single model. 
-        This design forms a self-improving loop that autonomously generates and filters training data through the L2A→A2L→L2C cycle, significantly enhancing data efficiency and generalization.
-        Experiments on both simulation and real-world pick-and-place tasks show that LACY improves manipulation success rates by over 56%, demonstrating robust and scalable language-action understanding.
+        Vision-Language-Action (VLA) models have shown strong performance on robotic manipulation tasks through large-scale multimodal pre- training. 
+        However, existing benchmarks typically assume negligible inference latency and rely primarily on binary success metrics, limiting their ability to evaluate deployment-relevant execution behavior. 
+        We introduce LIBERO-LQ, a Latency- and Quality-aware benchmark for evaluating VLA models under realistic execution constraints. 
+        LIBERO-LQ decouples policy inference from environment stepping, enabling simulated execution to progress during non-negligible inference latency and supporting systematic evaluation of synchronous and asynchronous execution paradigms under identical latency conditions. 
+        Beyond task success and completion time, LIBERO-LQ incorporates a suite of trajectory-level, non-functional metrics that capture execution quality, including smoothness, stability, efficiency, and energy consumption. 
+        Through experiments on representative VLA models, we show that latency-aware and quality-oriented evaluation exposes substantial differences in execution robustness and trajectory quality that are obscured under conventional synchronous evaluation.
     </div> 
 
-    <div class="tagline" id="deploy-in-sim">Simulation Demo.</div>
+    <!-- 2. MOTIVATION -->
+    <div class="tagline" id="motivation">Why VLA Latency Matters</div>
 
-    <!-- Video Gallery Section - SIMULATION REASONING VIDEOS -->
-    <div class="video-gallery-section" id="simGallerySection">
-      <div class="video-gallery-container">
-        <div class="video-gallery" id="videoGallerySim">
-          <!-- Videos remain here - ADD autoplay -->
-          <video class="gallery-video" src="./sim/1.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./sim/2.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./sim/3.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./sim/4.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./sim/5.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./sim/6.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./sim/7.mp4" autoplay muted playsinline loop></video>
-          <!-- Add more videos as needed, ensuring they have autoplay muted loop -->
-        </div>
-      </div>
-      <!-- Container for the caption AND buttons -->
-      <div class="gallery-caption-container">
-          <!-- Move button controls INSIDE caption container -->
-          <div class="gallery-nav-controls">
-              <button class="gallery-nav left" id="scrollLeftBtnSim">&lt;</button>
-              <button class="gallery-nav right" id="scrollRightBtnSim">&gt;</button>
-          </div>
-          <!-- Caption text -->
-          <p class="figure-caption gallery-caption">
-              <b>Absolute and relative spatial reasoning:</b> The robot understands the both the absolute location of the object and the relative spatial relationship between the target object and the reference object, successfully executing the pick-and-place task.
-          </p>
-      </div>
-    </div>
-  <!-- End Video Gallery Section -->
-
-    <div class="tagline" id="deploy-in-real">Real-world Demo.</div>
-
-    <!-- Video Gallery Section - REAL RELATIVE REASONING VIDEOS -->
-    <div class="video-gallery-section" id="realRelGallerySection">
-      <div class="video-gallery-container">
-        <div class="video-gallery" id="videoGalleryRealRel">
-          <!-- Videos remain here - ADD autoplay -->
-          <video class="gallery-video" src="./real_rel/1.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_rel/2.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_rel/3.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_rel/4.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_rel/5.mp4" autoplay muted playsinline loop></video>
-          <!-- Add more videos as needed, ensuring they have autoplay muted loop -->
-        </div>
-      </div>
-      <!-- Container for the caption AND buttons -->
-      <div class="gallery-caption-container">
-          <!-- Move button controls INSIDE caption container -->
-          <div class="gallery-nav-controls">
-              <button class="gallery-nav left" id="scrollLeftBtnRealRel">&lt;</button>
-              <button class="gallery-nav right" id="scrollRightBtnRealRel">&gt;</button>
-          </div>
-          <!-- Caption text -->
-          <p class="figure-caption gallery-caption">
-              <b>Relative spatial reasoning:</b> The robot understands the spatial relationship between the target object and the reference object and successfully executes the pick-and-place task.
-          </p>
-      </div>
-    </div>
-  <!-- End Video Gallery Section -->
-
-  <!-- Video Gallery Section - REAL ABSOLUTE REASONING VIDEOS -->
-  <div class="video-gallery-section" id="realAbsGallerySection">
-    <div class="video-gallery-container">
-      <div class="video-gallery" id="videoGalleryRealAbs">
-        <!-- Videos remain here - ADD autoplay -->
-        <video class="gallery-video" src="./real_abs/1.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./real_abs/2.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./real_abs/3.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./real_abs/4.mp4" autoplay muted playsinline loop></video>
-        <video class="gallery-video" src="./real_abs/5.mp4" autoplay muted playsinline loop></video>
-        <!-- Add more videos as needed, ensuring they have autoplay muted loop -->
-      </div>
-    </div>
-    <!-- Container for the caption AND buttons -->
-    <div class="gallery-caption-container">
-        <!-- Move button controls INSIDE caption container -->
-        <div class="gallery-nav-controls">
-            <button class="gallery-nav left" id="scrollLeftBtnRealAbs">&lt;</button>
-            <button class="gallery-nav right" id="scrollRightBtnRealAbs">&gt;</button>
-        </div>
-        <!-- Caption text -->
-        <p class="figure-caption gallery-caption">
-            <b>Absolute spatial reasoning:</b> The robot understands the absolute spatial semantics of the target object on the workspace and successfully executes the pick-and-place task.
-        </p>
-    </div>
-  </div>
-  <!-- End Video Gallery Section -->
-
-  
-    <div class="tagline" id="approach">Approach.</div>
-
-    <a id="figure-1-img" href="figs/lacy_pipeline.png" download="lacy_pipeline.png">
-      <img src="figs/lacy_pipeline.png" alt="lacy-pipeline">
+    <a id="figure-1-img" href="figs/controlstack.png" download="controlstack.png">
+      <img src="figs/controlstack.png" alt="controlstack">
     </a>
     <!-- Caption for Figure 1 -->
+    <p class="figure-caption">
+      <b>Execution pipeline of a Vision-Language-Action (VLA) system under realistic deployment conditions.</b> 
+    </p>
+
+    <div class="section">
+      High-frequency sensing and low-level control operate continuously, while VLA policy inference runs at a much lower rate and updates position targets asynchronously. 
+      During inference latency, the robot continues executing previously issued commands via the low-level controller, resulting in decoupled policy computation and control execution. 
+      This mismatch is typically ignored in existing evaluation protocols.
+    </div> 
+
+    <!-- 3. LATENCY -->
+    <div class="tagline" id="latency">Latency</div>
+
+    <a id="figure-1-img" href="figs/controlstack.png" download="controlstack.png">
+      <img src="figs/controlstack.png" alt="controlstack">
+    </a>
+    <!-- Caption for Figure 1 -->
+    <p class="figure-caption">
+      <b>Execution pipeline of a Vision-Language-Action (VLA) system under realistic deployment conditions.</b> 
+    </p>
+
+    <div class="section">
+      High-frequency sensing and low-level control operate continuously, while VLA policy inference runs at a much lower rate and updates position targets asynchronously. 
+      During inference latency, the robot continues executing previously issued commands via the low-level controller, resulting in decoupled policy computation and control execution. 
+      This mismatch is typically ignored in existing evaluation protocols.
+    </div> 
+
+  
+    <div class="tagline" id="latency">Latency</div>
+
+    <!-- <a id="figure-1-img" href="figs/lacy_pipeline.png" download="lacy_pipeline.png">
+      <img src="figs/lacy_pipeline.png" alt="lacy-pipeline">
+    </a>
+    
     <p class="figure-caption">
       <b>Overview of the LACY framework:</b> A single vision-language model jointly performs three tasks—L2A, A2L, and L2C—forming a self-improving cycle where actions and language refine each other through consistency verification.
     </p>
@@ -179,165 +128,133 @@ Self-Improving Robotic Manipulation</div>
       <b>LACY (Language-Action Cycle)</b> unifies three synergistic tasks—language-to-action generation (L2A), action-to-language explanation (A2L), and language-to-consistency verification (L2C)—within a single vision-language model.
 The framework operates as a closed-loop system, where L2A produces actions from language, A2L reconstructs a linguistic description from those actions, and L2C verifies whether the two language descriptions remain semantically consistent.
 This bidirectional cycle enables self-improving data generation: the model autonomously produces new training triplets and selectively retains only high-confidence samples through the L2C filter.
-By combining multi-task fine-tuning, chain-of-thought grounding, and confidence-based data selection, LACY continually enhances its manipulation policy without additional human supervision.
+By combining multi-task fine-tuning, chain-of-thought grounding, and confidence-based data selection, LACY continually enhances its manipulation policy without additional human supervision. -->
     </div> 
 
 
-    <!-- <div class="r2s-vertical-layout">
-      <div class="r2s-video-row r2s-top-row">
-        <video class="r2s-video-item r2s-video-input" src="./single/input.mp4" autoplay muted loop playsinline></video>
-        <video class="r2s-video-item r2s-video-smpl" src="./single/smpl.mp4" autoplay muted loop playsinline></video>
-      </div>
-      <div class="r2s-caption-row">
-        <p class="r2s-caption-item">Input Video</p>
-        <p class="r2s-caption-item">Human + Scene Reconstruction</p>
-      </div>
-      <div class="r2s-video-row r2s-bottom-row">
-        <video class="r2s-video-item r2s-video-g1" src="./single/g1.mp4" autoplay muted loop playsinline></video>
-        <div class="stacked-ego-videos">
-          <video class="r2s-video-item r2s-video-ego-rgb" src="./single/ego_rgb.mp4" autoplay muted loop playsinline></video>
-          <video class="r2s-video-item r2s-video-ego-depth" src="./single/ego_depth.mp4" autoplay muted loop playsinline></video>
-        </div>
-        <video class="r2s-video-item r2s-video-sim" src="./single/sim.mp4" autoplay muted loop playsinline></video>
-      </div>
-      <div class="r2s-caption-row">
-        <p class="r2s-caption-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1 Retargeted Results</p>
-        <p class="r2s-caption-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Egoview (RGB/Depth)</p>
-        <p class="r2s-caption-item">Training in Simulation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      </div>
-      <p class="figure-caption">
-        <b>From a monocular video, we jointly reconstruct metric-scale 4D human trajectories and dense scene geometry. The human motion is retargeted to a humanoid, and with the scene converted to a mesh in the simulator, the motion is used as a reference to train a context-aware whole-body control policy. While our policy does not use RGB conditioning for now, we demonstrate the potential of our reconstruction for ego-view rendering.</b>
-      </p>
-    </div> -->
+    <!-- 3.1 Latency-Aware Execution Model. -->
+    <div class="section-subtitle" id="Latency">1. Latency-Aware Simulation.</div>
 
-    <div class="section-subtitle" id="a2l">1. Action to Language.</div>
-
-
-    <a id="figure-2-img" href="figs/bidirectional.png" download="bidirectional.png">
-      <img src="figs/bidirectional.png" alt="Bidirectional Tasks">
+    <a id="figure-2-img" href="figs/comparision.png" download="comparision.png">
+      <img src="figs/comparision.png" alt="Comparison between between existing benchmarks and LIBERO-LQ">
     </a>
-    <!-- Caption for Figure 2 -->
     <p class="figure-caption">
-      <b>Language to Action, Action to Language:</b> While conventional VLAs learn only the <b>language-to-action (L2A)</b> mapping, LACY additionally trains the <b>action-to-language (A2L)</b> inverse mapping, enabling the model to generate and explain actions bidirectionally.
+      <b>Comparison between conventional VLA evaluation and our latency-aware execution model.</b>
     </p>
 
     <div class="section">
-
-      Traditional vision-language-action (VLA) models are trained solely in a <b>language-to-action (L2A)</b> direction—mapping task instructions and visual inputs to corresponding robot actions.
-While this paradigm enables imitation from language, it lacks the ability to reason about why an action is appropriate, limiting generalization and interpretability.
-To address this, we introduce the <b>action-to-language (A2L)</b> counterpart, which learns to describe observed actions in natural language given the same visual context.
-This inverse mapping encourages the model to form richer bidirectional representations, allowing it to <b>both act and explain</b>.
-When combined with the L2C verifier, these two tasks form the foundation of LACY's self-improving language-action cycle.
+      <b>Left:</b> Traditional evaluation tightly couples inference and environment stepping, implicitly assuming zero simulated inference latency \( \Delta t^{\text{sim}}_{\text{inf}} = 0 \). 
+      <b>Right:</b> Our approach decouples inference from environment stepping by explicitly injecting simulated inference latency. 
+      During inference, the simulator advances via repeated <code>env.step</code> calls using a synchronous or asynchronous execution protocol, 
+      where the number of steps \(N\) is determined by \( \Delta t^{\text{sim}}_{\text{inf}} \).
     </div>
 
-    <div class="section-subtitle" id="l2c">2. Language Consistency Verification.</div>
+    <!-- 3.2 Policy Execution Protocol. -->
+    <div class="section-subtitle" id="Execution">2. Policy Execution Protocol.</div>
 
-    <a id="figure-3-img" href="figs/self_supervision.png" download="self_supervision.png">
-      <img src="figs/self_supervision.png" alt="Language Consistency Verification">
+    <a id="figure-2-img" href="figs/sync_vs_async.png" download="sync_vs_async.png">
+      <img src="figs/sync_vs_async.png" alt="Policy execution protocol">
     </a>
-    <!-- Caption for Figure 3 -->
     <p class="figure-caption">
-      <b>Language Consistency Verification (L2C):</b> The L2C module verifies whether the generated action and reconstructed language remain consistent with the original instruction, enabling self-supervised feedback for continual improvement.
-
+      <b>Comparison of synchronous and asynchronous policy execution under inference latency. </b>
+      Each row illustrates action chunks produced at successive policy steps, while shaded regions indicate control timesteps. 
+      <b>(a) Synchronous execution</b> blocks policy updates during inference, causing the robot to reuse the last available action chunk and exhibit stop-and-go behavior. 
+      <b>(b) Asynchronous execution</b> decouples inference from execution by continuously consuming actions from an execution buffer, allowing new action chunks to replace future commands without stalling execution. 
+      This visualization highlights how inference latency induces temporal misalignment and affects trajectory continuity under different execution paradigms.
+    </p>
 
     <div class="section">
+      <b>(a) Synchronous execution</b> blocks policy updates during inference, causing the robot to reuse the last available action chunk and exhibit stop-and-go behavior. 
+      <b>(b) Asynchronous execution</b> decouples inference from execution by continuously consuming actions from an execution buffer, allowing new action chunks to replace future commands without stalling execution. 
+      This visualization highlights how inference latency induces temporal misalignment and affects trajectory continuity under different execution paradigms.
+    </div>
 
-      The <b>L2C (Language-to-Consistency)</b> module completes the language-action cycle by verifying whether the model's predicted action truly reflects the intent of the original language instruction.
-After generating an action from a command and explaining it back in language, L2C checks if the two descriptions convey the same meaning under the same visual context.
-This consistency feedback allows the model to evaluate its own outputs and identify uncertain cases without human supervision.
-By learning from these self-assessments, LACY continuously refines its understanding of how language and action correspond, leading to more reliable and generalizable behavior.
+    <!-- 4 Quality Metrics. -->
+    <div class="section" id="Quality">Quality.</div>
+
+    <a id="figure-3-img" href="figs/overview.png" download="overview.png">
+      <img src="figs/overview.png" alt="Overview of LIBERO-LQ">
+    </a>
+    <p class="figure-caption">
+      <b>Overview of LIBERO-LQ.</b> 
+    <div class="section">
+
+      Existing robotic manipulation benchmarks primarily evaluate policies using functional metrics such as binary task success. 
+      While effective for measuring task completion, such metrics provide limited insight into execution behavior and deployment-relevant performance.
+      To address this limitation, we include several non-functional metrics, which characterize execution quality, efficiency, and robustness.
     </div> 
 
+    <!-- 4.1 Inference Latency -->
+    <div class="section-subtitle" id="InferenceLatency">Inference Latency.</div>
     
-    <a id="figure-4-img" href="figs/self_supervision_pipeline.png" download="self_supervision_pipeline.png">
-      <img src="figs/self_supervision_pipeline.png" alt="L2C pipeline">
-    </a>
-    <!-- Caption for Figure 4 -->
-    <p class="figure-caption">
-      <b>L2C Pipeline:</b>  The L2C verifier assigns a confidence score to each language pair, allowing LACY to keep only reliable samples during self-supervised learning.
-      
-      <div class="section">
-  
-        To make self-verification reliable, the L2C module also estimates how confident the model is in its consistency judgment.
-Instead of a simple yes-or-no decision, LACY converts the model's internal output into a smooth confidence score that reflects how strongly it believes two descriptions match.
-This confidence is then used to filter uncertain or noisy samples—only high-quality, consistent pairs are added back to the training data.
-Through this selective feedback, LACY improves efficiently while avoiding the accumulation of its own errors.
-      </div> 
+    <div class="section">
+    We distinguish between <b>real inference latency</b> \( \Delta t^{\text{real}}_{\text{inf}} \), which measures the wall-clock time
+    required for model inference on a given observation, and <b>simulated inference latency</b> \( \Delta t^{\text{sim}}_{\text{inf}} \), which is an explicitly injected delay during simulation.
+    The simulated latency is treated as an experimental variable and determines how long high-level actions are held while the simulator continues to advance.
+    </div> 
 
-    <!-- <div class="additional-video-row">
-      <video id="input-video-cropped" class="additional-video-item" src="train_in_sim/vid1_input.mp4" autoplay muted playsinline loop></video>
-      <video class="additional-video-item" src="train_in_sim/vid1_3d.mp4" autoplay muted playsinline loop></video>
-      <video class="additional-video-item" src="train_in_sim/vid1_rl.mp4" autoplay muted playsinline loop></video>
-  </div>
-  <div class="additional-video-row" style="margin-top: 20px;">
-    <video id="input-video-cropped2" class="additional-video-item" src="train_in_sim/vid2_input.mp4#t=3" style="margin-right: 20px;" autoplay muted playsinline loop></video>
-    <video id="input-video-cropped3" class="additional-video-item" src="train_in_sim/vid2_3d.mp4" autoplay muted playsinline loop></video>
-    <video id="input-video-cropped4" class="additional-video-item" src="train_in_sim/vid2_rl.mp4" style="margin-left: 20px;" autoplay muted playsinline loop></video>
-</div>
-  <div class="r2s-caption-row" style="margin-top: 10px;">
-      <p class="r2s-caption-item">(a) input video</p>
-      <p class="r2s-caption-item">(b) reconstructed environment and human</p>
-      <p class="r2s-caption-item">(c) tracking the motion in sim</p>
-  </div>
-  <p class="figure-caption">
-          We conducted experiments to track internet videos of human performing complex motions, including crawling down the stairs and vaulting over a large block. This shows our pipeline's ability to learn from scalable web data and its ability to learn diverse motions.
-  </p> -->
+    <!-- 4.2 End-to-End Task Completion Time -->
+    <div class="section-subtitle" id="EndToEndTaskCompletionTime">End-to-End Task Completion Time.</div>
+    
+    <div class="section">
+    We define the end-to-end task completion time $T$ as the total wall-clock time required to complete a task episode, including both policy inference and action execution.
+    This metric captures the cumulative effect of inference latency and execution semantics over the entire task.
+    </div> 
 
-  <div class="tagline" id="deploy-in-real-fail">Failure Cases.</div>
+    <!-- 4.3 Jerk. -->
+    <div class="section-subtitle" id="Jerk">Jerk.</div>
+    
+    <div class="section">
+    <p>
+To quantify trajectory smoothness, we measure <em>jerk</em>, defined as the third time derivative of the end-effector position, which captures abrupt changes in acceleration and is a standard
+indicator of motion smoothness in robotic manipulation.
+Let \( \mathbf{p}_t \in \mathbb{R}^3 \) denote the end-effector position at timestep \( t \), sampled at a uniform interval \( \Delta t \).
+We approximate the jerk vector using a third-order finite difference:
+</p>
 
-  <!-- Video Gallery Section - REAL FAIL VIDEOS -->
-    <div class="video-gallery-section" id="realFailGallerySection">
-      <div class="video-gallery-container">
-        <div class="video-gallery" id="videoGalleryRealFail">
-          <!-- Videos remain here - ADD autoplay -->
-          <video class="gallery-video" src="./real_fail/1.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_fail/2.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_fail/3.mp4" autoplay muted playsinline loop></video>
-          <video class="gallery-video" src="./real_fail/4.mp4" autoplay muted playsinline loop></video>
-          <!-- Add more videos as needed, ensuring they have autoplay muted loop -->
-        </div>
-      </div>
-      <!-- Container for the caption AND buttons -->
-      <div class="gallery-caption-container">
-          <!-- Move button controls INSIDE caption container -->
-          <div class="gallery-nav-controls">
-              <button class="gallery-nav left" id="scrollLeftBtnRealFail">&lt;</button>
-              <button class="gallery-nav right" id="scrollRightBtnRealFail">&gt;</button>
-          </div>
-          <!-- Caption text -->
-          <p class="figure-caption gallery-caption">
-              <b>Failure Cases:</b> In most cases, the picking action has assigned the correct object, but the picking location is at the boundary of the object, the object tends to be out of graspable range.
+<p class="math-display">
+\[
+\mathbf{j}_t \approx
+\frac{
+\mathbf{p}_t
+- 3\mathbf{p}_{t-1}
++ 3\mathbf{p}_{t-2}
+- \mathbf{p}_{t-3}
+}{
+\Delta t^3
+}.
+\]
+</p>
 
-          </p>
-      </div>
-    </div>
-  <!-- End Video Gallery Section -->
+<p>
+Trajectory smoothness is then quantified by the average jerk norm over the rollout:
+</p>
 
-    <!-- <div class="tagline" id="acknowledgements">Acknowledgements.</div>
-    <div class="section" style="margin-top: -5px;">
-      <p>
-        We thank Brent Yi for his guidance with the excellent 3D visualization tool we use, Viser. We
-        are grateful to Ritvik Singh, Jason Liu, Ankur Handa, Ilija Radosavovic, Himanshu Gaurav-Singh,
-        Haven Feng, and Kevin Zakka for helpful advice and discussions during the paper. We thank Lea
-        M&uuml;ller for helpful discussions at the start of the project. We thank Zhizheng Liu for helpful
-        suggestions on evaluating human and scene reconstruction. We thank Moji Shi and Huayi Wang for
-        advice on using LiDAR heightmap input. We thank Eric Xu, Matthew Liu, Hayeon
-        Jeong, Hyunjoo Lee, Jihoon Choi, Tyler Bonnen, and Yao Tang for their help in capturing and
-        featuring in the video clips used in this project.
-      </p>
-    </div>
+<p class="math-display">
+\[
+J
+=
+\frac{1}{T - 3}
+\sum_{t=4}^{T}
+\lVert \mathbf{j}_t \rVert_2,
+\]
+</p>
 
-    <div class="bibtex-code" id="bibtex">
-      <div class="bibtex-title">BibTeX</div>
-      <pre><code>@article{videomimic,
-          title     = {Visual imitation enables contextual humanoid control},
-          author    = {Allshire, Arthur and Choi, Hongsuk and Zhang, Junyi and McAllister, David 
-                       and Zhang, Anthony and Kim, Chung Min and Darrell, Trevor and Abbeel, 
-                       Pieter and Malik, Jitendra and Kanazawa, Angjoo},
-          journal   = {arXiv preprint arXiv:2505.03729},
-          year      = {2025}
-        }</code></pre>
-    </div> -->
+<p>
+where \( T \) denotes the trajectory length.
+Lower jerk norm values correspond to smoother and more stable motion, while higher values
+indicate abrupt or oscillatory behavior.
+</p>
+
+    <!-- 4.4 Stability -->
+    <div class="section-subtitle" id="Stability">Stability.</div>
+    
+    <div class="section">
+    We define the end-to-end task completion time $T$ as the total wall-clock time required to complete a task episode, including both policy inference and action execution.
+    This metric captures the cumulative effect of inference latency and execution semantics over the entire task.
+    </div> 
+    </div> 
+
 
   </div> <!-- End of main-content div -->
 
