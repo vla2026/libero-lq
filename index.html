@@ -160,176 +160,94 @@
       To address this limitation, we include several non-functional metrics, which characterize execution quality, efficiency, and robustness.
     </div> 
 
-    <!-- 4.1 Inference Latency -->
-    <div class="section-subtitle" id="InferenceLatency">Inference Latency.</div>
-    
-    <div class="section">
-    We distinguish between <b>real inference latency</b> \( \Delta t^{\text{real}}_{\text{inf}} \), which measures the wall-clock time
-    required for model inference on a given observation, and <b>simulated inference latency</b> \( \Delta t^{\text{sim}}_{\text{inf}} \), which is an explicitly injected delay during simulation.
-    The simulated latency is treated as an experimental variable and determines how long high-level actions are held while the simulator continues to advance.
-    </div> 
-
-    <!-- 4.2 End-to-End Task Completion Time -->
-    <div class="section-subtitle" id="EndToEndTaskCompletionTime">End-to-End Task Completion Time.</div>
-    
-    <div class="section">
-    We define the end-to-end task completion time $T$ as the total wall-clock time required to complete a task episode, including both policy inference and action execution.
-    This metric captures the cumulative effect of inference latency and execution semantics over the entire task.
-    </div> 
-
-    <!-- 4.3 Jerk. -->
-    <div class="section-subtitle" id="Jerk">Jerk.</div>
-    
-    <div class="section">
-    <p>
-To quantify trajectory smoothness, we measure <em>jerk</em>, defined as the third time derivative of the end-effector position, which captures abrupt changes in acceleration and is a standard
-indicator of motion smoothness in robotic manipulation.
-Let \( \mathbf{p}_t \in \mathbb{R}^3 \) denote the end-effector position at timestep \( t \), sampled at a uniform interval \( \Delta t \).
-We approximate the jerk vector using a third-order finite difference:
-</p>
-
-<p class="math-display">
-\[
-\mathbf{j}_t \approx
-\frac{
-\mathbf{p}_t
-- 3\mathbf{p}_{t-1}
-+ 3\mathbf{p}_{t-2}
-- \mathbf{p}_{t-3}
-}{
-\Delta t^3
-}.
-\]
-</p>
-
-<p>
-Trajectory smoothness is then quantified by the average jerk norm over the rollout:
-</p>
-
-<p class="math-display">
-\[
-J
-=
-\frac{1}{T - 3}
-\sum_{t=4}^{T}
-\lVert \mathbf{j}_t \rVert_2,
-\]
-</p>
-
-<p>
-where \( T \) denotes the trajectory length.
-Lower jerk norm values correspond to smoother and more stable motion, while higher values
-indicate abrupt or oscillatory behavior.
-</p>
-
-    <!-- 4.4 Stability -->
-    <div class="section-subtitle" id="Stability">Stability.</div>
-    
-    <div class="section">
-    <p> We measure stability by the average deviation of the end-effector position from its mean over a short temporal window of the last \( K \) steps: </p>
-
-    <p class="math-display">
-    \[
-    \bar{\mathbf{p}}
-    =
-    \frac{1}{K}
-    \sum_{i=T-K+1}^{T}
-    \mathbf{p}_i,
-    \quad
-    \text{EE-Osc}
-    =
-    \frac{1}{K}
-    \sum_{i=T-K+1}^{T}
-    \left\|
-    \mathbf{p}_i - \bar{\mathbf{p}}
-    \right\|_2
-    \]
+    <div class="metric">
+    <h3>Inference Latency</h3>
+    <p><strong>What it measures.</strong><br>
+      The delay between observing the environment and producing an action.
     </p>
+    <p><strong>Why it matters.</strong><br>
+      Inference latency directly determines how long high-level commands are held while the robot
+      continues executing, fundamentally shaping downstream motion behavior.
+    </p>
+  </div>
 
-<p>
-where \( \mathbf{p}_i \in \mathbb{R}^3 \) denotes the end-effector position at timestep \( i \).
-Higher EE-Osc indicates increased oscillatory behavior during task execution, often arising from latency-induced control inconsistencies.
-</p>
+  <div class="metric">
+    <h3>End-to-End Task Completion Time</h3>
+    <p><strong>What it measures.</strong><br>
+      The total wall-clock time required to complete a task, including both inference and execution.
+    </p>
+    <p><strong>Why it matters.</strong><br>
+      This metric captures the cumulative impact of inference latency and execution semantics over
+      the entire episode, reflecting real deployment performance.
+    </p>
+  </div>
 
-    </div> 
+  <div class="metric">
+    <h3>Smoothness (Jerk)</h3>
+    <p><strong>What it measures.</strong><br>
+      Abrupt changes in motion, quantified via end-effector jerk.
+    </p>
+    <p><strong>Why it matters.</strong><br>
+      Latency often induces stop-and-go behavior and discontinuities that are invisible to success rate
+      but manifest as high jerk, leading to unstable or unsafe motions.
+    </p>
+  </div>
 
-    <!-- 4.5 Trajectory Efficiency -->
-    <div class="section-subtitle" id="TrajectoryEfficiency">Trajectory Efficiency.</div>
-    
-    <div class="section">
-    <p> We assess trajectory efficiency by the total trajectory length required to successfully complete the task.
-        Since the minimal feasible trajectory length depends on task geometry and goal configuration, efficiency is evaluated via relative, within-task comparisons among successful trials. </p>
+  <div class="metric">
+    <h3>Stability (EE Oscillation)</h3>
+    <p><strong>What it measures.</strong><br>
+      Short-horizon oscillations of the end-effector position during task execution.
+    </p>
+    <p><strong>Why it matters.</strong><br>
+      Even successful rollouts may exhibit oscillatory behavior under delayed policy updates, revealing
+      control instability caused by inference latency.
+    </p>
+  </div>
 
-    </div> 
+  <div class="metric">
+    <h3>Trajectory Efficiency</h3>
+    <p><strong>What it measures.</strong><br>
+      The total path length required to complete a task.
+    </p>
+    <p><strong>Why it matters.</strong><br>
+      Longer or unnecessarily winding trajectories indicate inefficiencies that success metrics alone fail
+      to penalize.
+    </p>
+  </div>
 
-    <!-- 4.6 Joint Rotation Efficiency -->
-    <div class="section-subtitle" id="JointRotationEfficiency">Joint Rotation Efficiency.</div>
-    
-    <div class="section">
+  <div class="metric">
+    <h3>Joint Rotation Efficiency</h3>
+    <p><strong>What it measures.</strong><br>
+      The cumulative amount of joint motion executed over a trajectory.
+    </p>
+    <p><strong>Why it matters.</strong><br>
+      Excessive joint rotation—especially back-and-forth motion—signals inefficient execution that
+      increases wear, energy consumption, and execution time.
+    </p>
+  </div>
+
+  <div class="metric">
+    <h3>Energy Efficiency</h3>
+    <p><strong>What it measures.</strong><br>
+      Trajectory-level energy consumption estimated from joint torques and velocities, reported in normalized
+      form.
+    </p>
+    <p><strong>Why it matters.</strong><br>
+      Latency-induced behaviors can significantly increase energy usage even when task success is unchanged,
+      exposing inefficiencies hidden by conventional evaluation.
+    </p>
+  </div>
+
+  <div class="takeaway">
+    <h3>Takeaway</h3>
     <p>
-We measure joint rotation efficiency by quantifying the total amount of joint motion executed over a trajectory.
-Let \( \boldsymbol{\theta}_t \in \mathbb{R}^N \) denote the vector of joint angles at timestep \( t \) for an \( N \)-DoF robot.
-Rather than considering net joint displacement between the start and end states, we compute the cumulative joint rotation distance along the trajectory:
-</p>
-
-<p class="math-display">
-\[
-E_{\mathrm{joint}}
-=
-\sum_{t=2}^{T}
-\left\lVert
-\boldsymbol{\theta}_t - \boldsymbol{\theta}_{t-1}
-\right\rVert_1,
-\]
-</p>
-
-<p>
-where \( T \) denotes the trajectory length.
-This metric captures the total amount of joint rotation required to execute a task,
-penalizing unnecessary back-and-forth or oscillatory motions that may not affect task success
-but reduce execution efficiency.
-</p>
-
-<p>
-To account for differences in joint ranges and ensure comparability across joints,
-we additionally report a normalized variant in which each joint rotation is scaled by its
-allowable range:
-</p>
-
-<p class="math-display">
-\[
-E_{\mathrm{joint}}^{\mathrm{norm}}
-=
-\sum_{t=2}^{T}
-\sum_{i=1}^{N}
-\frac{
-\left|
-\theta_{t,i} - \theta_{t-1,i}
-\right|
-}{
-\theta_i^{\max} - \theta_i^{\min}
-},
-\]
-</p>
-
-<p>
-where \( \theta_i^{\min} \) and \( \theta_i^{\max} \) denote the lower and upper limits of joint \( i \).
-Lower values indicate more efficient joint-space trajectories with reduced unnecessary rotation.
-</p>
-
-<!-- 4.7 Energy Efficiency  -->
-    <div class="section-subtitle" id="EnergyEfficiency">Energy Efficiency.</div>
-    
-    <div class="section">
+      <em>Two policies with identical success rates can exhibit drastically different execution quality,
+      stability, and energy efficiency under inference latency.</em>
+    </p>
     <p>
-We evaluate energy efficiency using a trajectory-level energy metric computed from joint torques and velocities available in simulation.
-Specifically, the total trajectory energy \( E_{\text{traj}} \) is estimated by integrating mechanical power, electrical loss,
-and constant overhead terms over time using a simplified actuator energy model.
-To decouple energy consumption from execution length, we report normalized energy defined as
-\( E_{\text{norm}} = \frac{E_{\text{traj}}}{T} \).
-</p>
-
-    </div> 
+      LIBERO-LQ makes these differences <strong>measurable, comparable, and systematic</strong>.
+    </p>
+  </div>
 
 
 
