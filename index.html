@@ -147,7 +147,7 @@
     </div>
 
     <!-- 4 Quality Metrics. -->
-    <div class="section" id="Quality">Quality.</div>
+    <div class="tagline" id="Quality">Quality.</div>
 
     <a id="figure-3-img" href="figs/overview.png" download="overview.png">
       <img src="figs/overview.png" alt="Overview of LIBERO-LQ">
@@ -160,8 +160,8 @@
       To address this limitation, we include several non-functional metrics, which characterize execution quality, efficiency, and robustness.
     </div> 
 
-    <div class="metric">
-    <h3>Inference Latency</h3>
+    <div class="section">
+    <h3>1. Inference Latency</h3>
     <p><strong>What it measures.</strong><br>
       The delay between observing the environment and producing an action.
     </p>
@@ -171,19 +171,19 @@
     </p>
   </div>
 
-  <div class="metric">
-    <h3>End-to-End Task Completion Time</h3>
+  <div class="section">
+    <h3>2. End-to-End Task Completion Time</h3>
     <p><strong>What it measures.</strong><br>
       The total wall-clock time required to complete a task, including both inference and execution.
     </p>
     <p><strong>Why it matters.</strong><br>
-      This metric captures the cumulative impact of inference latency and execution semantics over
+      This section captures the cumulative impact of inference latency and execution semantics over
       the entire episode, reflecting real deployment performance.
     </p>
   </div>
 
-  <div class="metric">
-    <h3>Smoothness (Jerk)</h3>
+  <div class="section">
+    <h3>3. Smoothness (Jerk)</h3>
     <p><strong>What it measures.</strong><br>
       Abrupt changes in motion, quantified via end-effector jerk.
     </p>
@@ -193,8 +193,8 @@
     </p>
   </div>
 
-  <div class="metric">
-    <h3>Stability (EE Oscillation)</h3>
+  <div class="section">
+    <h3>4. Stability (EE Oscillation)</h3>
     <p><strong>What it measures.</strong><br>
       Short-horizon oscillations of the end-effector position during task execution.
     </p>
@@ -204,8 +204,8 @@
     </p>
   </div>
 
-  <div class="metric">
-    <h3>Trajectory Efficiency</h3>
+  <div class="section">
+    <h3>5. Trajectory Efficiency</h3>
     <p><strong>What it measures.</strong><br>
       The total path length required to complete a task.
     </p>
@@ -215,8 +215,8 @@
     </p>
   </div>
 
-  <div class="metric">
-    <h3>Joint Rotation Efficiency</h3>
+  <div class="section">
+    <h3>6. Joint Rotation Efficiency</h3>
     <p><strong>What it measures.</strong><br>
       The cumulative amount of joint motion executed over a trajectory.
     </p>
@@ -226,8 +226,8 @@
     </p>
   </div>
 
-  <div class="metric">
-    <h3>Energy Efficiency</h3>
+  <div class="section">
+    <h3>7. Energy Efficiency</h3>
     <p><strong>What it measures.</strong><br>
       Trajectory-level energy consumption estimated from joint torques and velocities, reported in normalized
       form.
@@ -238,7 +238,7 @@
     </p>
   </div>
 
-  <div class="takeaway">
+  <div class="section">
     <h3>Takeaway</h3>
     <p>
       <em>Two policies with identical success rates can exhibit drastically different execution quality,
