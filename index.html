@@ -33,13 +33,6 @@
         <li class="toc-subsection"><a href="#Execution">Policy Execution Protocol</a></li>
 
       <li><a href="#Quality">Quality</a></li>
-        <li class="toc-subsection"><a href="#InferenceLatency">Inference Latency</a></li>
-        <li class="toc-subsection"><a href="#EndToEndTaskCompletionTime">End-to-End Task Completion Time</a></li>
-        <li class="toc-subsection"><a href="#Jerk">Jerk</a></li>
-        <li class="toc-subsection"><a href="#Stability">Stability</a></li>
-        <li class="toc-subsection"><a href="#TrajectoryEfficiency">Trajectory Efficiency</a></li>
-        <li class="toc-subsection"><a href="#JointRotationEfficiency">Joint Rotation Efficiency</a></li>
-        <li class="toc-subsection"><a href="#EnergyEfficiency">Energy Efficiency</a></li>
 
       <li><a href="#deploy-in-real-fail">Experimental Results</a></li>
       <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
@@ -108,7 +101,8 @@
 
     <!-- 3. LATENCY -->
     <div class="tagline" id="latency">Latency</div>
-
+    <div class="section">
+  </div>
     <!-- 3.1 Latency-Aware Execution Model. -->
     <div class="section-subtitle" id="Latency">1. Latency-Aware Simulation.</div>
 
@@ -162,91 +156,50 @@
 
     <div class="section">
     <h3>1. Inference Latency</h3>
-    <p><strong>What it measures.</strong><br>
       The delay between observing the environment and producing an action.
-    </p>
-    <p><strong>Why it matters.</strong><br>
       Inference latency directly determines how long high-level commands are held while the robot
       continues executing, fundamentally shaping downstream motion behavior.
-    </p>
   </div>
 
   <div class="section">
     <h3>2. End-to-End Task Completion Time</h3>
-    <p><strong>What it measures.</strong><br>
       The total wall-clock time required to complete a task, including both inference and execution.
-    </p>
-    <p><strong>Why it matters.</strong><br>
-      This section captures the cumulative impact of inference latency and execution semantics over
-      the entire episode, reflecting real deployment performance.
-    </p>
   </div>
 
   <div class="section">
     <h3>3. Smoothness (Jerk)</h3>
-    <p><strong>What it measures.</strong><br>
       Abrupt changes in motion, quantified via end-effector jerk.
-    </p>
-    <p><strong>Why it matters.</strong><br>
       Latency often induces stop-and-go behavior and discontinuities that are invisible to success rate
       but manifest as high jerk, leading to unstable or unsafe motions.
-    </p>
   </div>
 
   <div class="section">
     <h3>4. Stability (EE Oscillation)</h3>
-    <p><strong>What it measures.</strong><br>
       Short-horizon oscillations of the end-effector position during task execution.
-    </p>
-    <p><strong>Why it matters.</strong><br>
       Even successful rollouts may exhibit oscillatory behavior under delayed policy updates, revealing
       control instability caused by inference latency.
-    </p>
   </div>
 
   <div class="section">
     <h3>5. Trajectory Efficiency</h3>
-    <p><strong>What it measures.</strong><br>
       The total path length required to complete a task.
-    </p>
-    <p><strong>Why it matters.</strong><br>
       Longer or unnecessarily winding trajectories indicate inefficiencies that success metrics alone fail
       to penalize.
-    </p>
   </div>
 
   <div class="section">
     <h3>6. Joint Rotation Efficiency</h3>
-    <p><strong>What it measures.</strong><br>
       The cumulative amount of joint motion executed over a trajectory.
-    </p>
-    <p><strong>Why it matters.</strong><br>
       Excessive joint rotation—especially back-and-forth motion—signals inefficient execution that
       increases wear, energy consumption, and execution time.
-    </p>
   </div>
 
   <div class="section">
     <h3>7. Energy Efficiency</h3>
-    <p><strong>What it measures.</strong><br>
       Trajectory-level energy consumption estimated from joint torques and velocities, reported in normalized
       form.
-    </p>
-    <p><strong>Why it matters.</strong><br>
       Latency-induced behaviors can significantly increase energy usage even when task success is unchanged,
       exposing inefficiencies hidden by conventional evaluation.
-    </p>
-  </div>
-
-  <div class="section">
-    <h3>Takeaway</h3>
-    <p>
-      <em>Two policies with identical success rates can exhibit drastically different execution quality,
-      stability, and energy efficiency under inference latency.</em>
-    </p>
-    <p>
-      LIBERO-LQ makes these differences <strong>measurable, comparable, and systematic</strong>.
-    </p>
   </div>
 
 
