@@ -34,7 +34,7 @@
 
       <li><a href="#Quality">Quality</a></li>
 
-      <li><a href="#deploy-in-real-fail">Experimental Results</a></li>
+      <li><a href="#experimental-results">Experimental Results</a></li>
       <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
     </ul>
   </div>
@@ -201,7 +201,82 @@
       Latency-induced behaviors can significantly increase energy usage even when task success is unchanged,
       exposing inefficiencies hidden by conventional evaluation.
   </div>
+  <div class="tagline" id="experimental-results">Experimental Results.</div>
+<div class="section">
+  <p>
+    We evaluate representative Vision-Language-Action (VLA) models under identical task settings
+    while varying inference latency and execution protocols.
+    LIBERO-LQ reveals systematic differences in execution behavior that are obscured under
+    conventional success-only evaluation.
+  </p>
+  </div>
 
+  <div class="section">
+    <h3>Latency Exposes Hidden Failure Modes</h3>
+    <p>
+      As inference latency increases, task success rates alone fail to capture degradation in
+      execution quality.
+      Even when success rates remain comparable, delayed policy updates introduce stop-and-go
+      behavior, oscillations, and inefficient motion patterns.
+    </p>
+    <p class="hint">
+      <em>Related metrics:</em> Smoothness (Jerk), Stability (EE Oscillation)
+    </p>
+    <!-- Optional: Insert figure here -->
+    <!-- <img src="figures/latency_effects.png" alt="Latency effects on execution quality"> -->
+  </div>
+
+  <div class="section">
+    <h3>Synchronous vs. Asynchronous Execution</h3>
+    <p>
+      Under identical simulated inference latency, synchronous execution blocks policy updates
+      and reuses stale actions, leading to discontinuous trajectories.
+      In contrast, asynchronous execution maintains continuous motion by decoupling inference
+      from execution, resulting in lower jerk and reduced oscillatory behavior.
+    </p>
+    <p class="hint">
+      <em>Related metrics:</em> Smoothness (Jerk), Stability (EE Oscillation), End-to-End Time
+    </p>
+    <!-- Optional: Insert figure here -->
+    <!-- <img src="figures/sync_vs_async.png" alt="Synchronous vs asynchronous execution"> -->
+  </div>
+
+  <div class="section">
+    <h3>Quality and Efficiency Are Not Correlated with Success</h3>
+    <p>
+      We observe cases where policies achieve similar task success rates but differ significantly
+      in trajectory efficiency, joint rotation, and energy consumption.
+      These discrepancies highlight inefficiencies that remain invisible under traditional
+      evaluation protocols.
+    </p>
+    <p class="hint">
+      <em>Related metrics:</em> Trajectory Efficiency, Joint Rotation Efficiency, Energy Efficiency
+    </p>
+    <!-- Optional: Insert figure here -->
+    <!-- <img src="figures/efficiency_energy.png" alt="Efficiency and energy comparison"> -->
+  </div>
+
+  <div class="section">
+    <h3>Metric-Driven Evaluation Enables Fine-Grained Comparison</h3>
+    <p>
+      By jointly analyzing latency, execution protocols, and trajectory-level metrics,
+      LIBERO-LQ enables fine-grained and deployment-relevant comparison between VLA models.
+      This reveals trade-offs between robustness, efficiency, and energy consumption that are
+      otherwise masked by binary success metrics.
+    </p>
+  </div>
+
+  <div class="takeaway">
+    <h3>Summary</h3>
+    <p>
+      <em>
+        LIBERO-LQ demonstrates that inference latency fundamentally reshapes execution behavior.
+        Evaluating VLA models without accounting for latency and execution quality can lead to
+        misleading conclusions about real-world performance.
+      </em>
+    </p>
+  </div>
+</section>
 
 
   </div> <!-- End of main-content div -->
